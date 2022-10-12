@@ -1,3 +1,5 @@
-import {createAdvertismentsArray} from './data.js';
+import { createAdvertismentsArray } from './data.js';
+import './popup.js';
+import './form.js'
 
-console.log(createAdvertismentsArray(createAdvertismentsArray()));
+createAdvertismentsArray();
