@@ -1,33 +1,24 @@
-const timeInSelect = document.querySelector('#timein');
-const timeOutSelect = document.querySelector('#timeout');
+const typeOfHousing = document.querySelector('[name = type]');
 
-const onTimeInChange = () => {
-  switch(timeInSelect.value) {
-    case '12:00':
-      timeOutSelect.value = '12:00';
-      break;
-    case '13:00':
-      timeOutSelect.value = '13:00';
-      break;
-    case '14:00':
-      timeOutSelect.value = '14:00';
-      break;
-  }
+const onTimeSelectChange = (value1, value2) => {
+  return (evt) => {
+    evt.preventDefault();
+    switch(value1.value) {
+      case '12:00':
+        value2.value = '12:00';
+        break;
+      case '13:00':
+        value2.value = '13:00';
+        break;
+      case '14:00':
+        value2.value = '14:00';
+        break;
+    }
+  };
 };
 
-const onTimeOutChange = () => {
-  switch(timeOutSelect.value) {
-    case '12:00':
-      timeInSelect.value = '12:00';
-      break;
-    case '13:00':
-      timeInSelect.value = '13:00';
-      break;
-    case '14:00':
-      timeInSelect.value = '14:00';
-      break;
-  }
+const onTypeOfHousingSelectChange = () => {
+  
 };
 
-timeInSelect.addEventListener('change', onTimeInChange);
-timeOutSelect.addEventListener('change', onTimeOutChange);
+export { onTimeSelectChange };
