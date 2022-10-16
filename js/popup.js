@@ -1,10 +1,13 @@
-import { createAdvertismentsArray } from './data.js'
+export {getSimilarArticles};
 
+const TYPE_OF_HOUSING = {
+  'bungalow': 'бунгало',
+  'flat': 'квартира',
+  'house': 'дом',
+  'hotel': 'отель',
+  'palace': 'дворец',
+};
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas');
-
-const articlesData = createAdvertismentsArray();
-
 const getRoomsMessage = (room) => {
   let message = ''; 
   if(room === 1) {
@@ -31,16 +34,19 @@ const getTypeHousing = (type) => {
   let typeHousing = '';
   switch (type) {
     case 'flat':
-      typeHousing = 'Квартира';
+      typeHousing = TYPE_OF_HOUSING.flat;
       break;
     case 'bungalow':
-      typeHousing = 'Бунгало';
+      typeHousing = TYPE_OF_HOUSING.bungalow;
+      break;
+    case 'hotel':
+      typeHousing = TYPE_OF_HOUSING.hotel;
       break;
     case 'house':
-      typeHousing = 'Дом';
+      typeHousing = TYPE_OF_HOUSING.house;
       break;
     case 'palace':
-      typeHousing = 'Дворец';
+      typeHousing = TYPE_OF_HOUSING.palace;
       break;
   }
   return typeHousing;
@@ -97,9 +103,3 @@ const getSimilarArticles = (array) => {
   });
   return result;
 }
-
-mapCanvas.appendChild(getSimilarArticles(articlesData)[5]);
-
-// getSimilarArticles(articlesData).forEach(item => {
-//   mapCanvas.appendChild(item);
-// });

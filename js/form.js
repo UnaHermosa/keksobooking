@@ -1,46 +1,80 @@
-export { onTimeSelectChange, onTypeOfHousingSelectChange };
+import {CENTER_TOKYO, getCoordinates} from './map.js';
+export { activateForm, disableForm };
 
-const onTimeSelectChange = (firstElement, secondElement) => {
+const mapFilters = document.querySelector('.map__filters');
+const mapFiltersList = mapFilters.children;
+const adForm = document.querySelector('.ad-form');
+const adFormList = adForm.children;
+const address = adForm.querySelector('#address');
+const formType = adForm.querySelector('#type');
+const formPrice = adForm.querySelector('#price');
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+
+const MIN_PRICE_OF_HOUSING = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
+
+const onTimeSelectChange = (element) => {
   return (evt) => {
-    evt.preventDefault();
-    switch(firstElement.value) {
-      case '12:00':
-        secondElement.value = '12:00';
-        break;
-      case '13:00':
-        secondElement.value = '13:00';
-        break;
-      case '14:00':
-        secondElement.value = '14:00';
-        break;
-    }
+    element.value = evt.target.value;
   };
 };
 
-const onTypeOfHousingSelectChange = (firstElement, secondElement) => {
+const onTypeOfHousingSelectChange = () => {
   return (evt) => {
-    evt.preventDefault();
-    switch (firstElement.value) {
+    switch (evt.target.value) {
       case 'bungalow':
-        secondElement.placeholder = '0';
-        secondElement.min = '0';
+        formPrice.placeholder = MIN_PRICE_OF_HOUSING.bungalow;
+        formPrice.min = MIN_PRICE_OF_HOUSING.bungalow;
         break;
       case 'flat':
-        secondElement.placeholder = '1000';
-        secondElement.min = '1000';
+        formPrice.placeholder = MIN_PRICE_OF_HOUSING.flat;
+        formPrice.min = MIN_PRICE_OF_HOUSING.flat;
         break;
       case 'hotel':
-        secondElement.placeholder = '3000';
-        secondElement.min = '3000';
+        formPrice.placeholder = MIN_PRICE_OF_HOUSING.hotel;
+        formPrice.min = MIN_PRICE_OF_HOUSING.hotel;
         break;
       case 'house':
-        secondElement.placeholder = '5000';
-        secondElement.min = '5000';
+        formPrice.placeholder = MIN_PRICE_OF_HOUSING.house;
+        formPrice.min = MIN_PRICE_OF_HOUSING.house;
         break;
       case 'palace':
-        secondElement.placeholder = '10000';
-        secondElement.min = '10000';
+        formPrice.placeholder = MIN_PRICE_OF_HOUSING.palace;
+        formPrice.min = MIN_PRICE_OF_HOUSING.palace;
         break;
     }
   };
 };
+
+const addClass = (list, flag) => {
+  for(const item of list) {
+    item.disabled = flag;
+  }
+};
+
+const disableForm = () => {
+  adForm.classList.add('ad-form--disabled');
+  addClass(adFormList, true);
+  mapFilters.classList.add('map__filters--disabled');
+  addClass(mapFiltersList, true);
+};
+
+const activateForm = () => {
+  adForm.classList.remove('ad-form--disabled');
+  addClass(adFormList, false);
+  mapFilters.classList.remove('map__filters--disabled');
+  addClass(mapFiltersList, false);
+  getCoordinates(CENTER_TOKYO);
+  address.setAttribute('readonly', '');
+};
+
+formType.addEventListener('change', onTypeOfHousingSelectChange());
+timeIn.addEventListener('change', onTimeSelectChange(timeOut));
+timeOut.addEventListener('change', onTimeSelectChange(timeIn));
+
