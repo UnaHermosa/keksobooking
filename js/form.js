@@ -1,4 +1,4 @@
-import {CENTER_TOKYO, getCoordinates} from './map.js';
+import { CENTER_TOKYO, getCoordinates } from './map.js';
 export { activateForm, disableForm };
 
 const mapFilters = document.querySelector('.map__filters');
@@ -77,4 +77,5 @@ const activateForm = () => {
 formType.addEventListener('change', onTypeOfHousingSelectChange());
 timeIn.addEventListener('change', onTimeSelectChange(timeOut));
 timeOut.addEventListener('change', onTimeSelectChange(timeIn));
+
 

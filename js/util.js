@@ -6,7 +6,7 @@ const getRandomNumber = (min, max) => {
   if (max < min) {
     [min, max] = [max, min];
   }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return _.random(min, max);
 };
 
 const getRandomFloatNumber = (min, max, count) => {
@@ -18,7 +18,7 @@ const getRandomFloatNumber = (min, max, count) => {
     [min, max] = [max, min]
   }
 
-  return parseFloat(Math.random() * (max - min + 1)).toFixed(count);
+  return parseFloat(_.random(min, max, true).toFixed(count));
 };
 
 const getRandomArrayElement = (array) => {
