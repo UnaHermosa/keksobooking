@@ -1,5 +1,6 @@
 import { createAdvertismentsArray } from './data.js';
 import { activateForm } from './form.js';
+import { getSimilarArticles } from './popup.js';
 export {mainMarker, map, CENTER_TOKYO, getMap, getCoordinates };
 
 const address = document.querySelector('#address');
@@ -77,7 +78,9 @@ const markers = () => {
     {
       icon: pin,
     });
-    marker.addTo(map);
+    marker.addTo(map).bindPopup(getSimilarArticles(element), {
+      keepInView: true,
+    });
   })
 };
 

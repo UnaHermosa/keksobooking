@@ -70,36 +70,32 @@ const getPhotosList = (array, list) => {
   })
 }
 
-const getSimilarArticles = (array) => {
-  let result = [];
-  array.forEach((element) => {
-    const item = cardTemplate.cloneNode(true);
-    const features = item.querySelector('.popup__features');
-    const photos = item.querySelector('.popup__photos');
-    const guest = element.offer.guests;
-    const room = element.offer.rooms;
+const getSimilarArticles = (data) => {
+  const item = cardTemplate.cloneNode(true);
+  const features = item.querySelector('.popup__features');
+  const photos = item.querySelector('.popup__photos');
+  const guest = data.offer.guests;
+  const room = data.offer.rooms;
 
-    (!element.offer.title) ? item.querySelector('.popup__title').classList.add('hidden') : item.querySelector('.popup__title').textContent = element.offer.title;
+  (!data.offer.title) ? item.querySelector('.popup__title').classList.add('hidden') : item.querySelector('.popup__title').textContent = data.offer.title;
 
-    (!element.offer.address) ? item.querySelector('.popup__text--address').classList.add('hidden') : item.querySelector('.popup__text--address').textContent = element.offer.address;
+  (!data.offer.address) ? item.querySelector('.popup__text--address').classList.add('hidden') : item.querySelector('.popup__text--address').textContent = data.offer.address;
 
-    (!element.offer.price) ? item.querySelector('.popup__text--price').calssList.add('hidden') : item.querySelector('.popup__text--price').textContent = `${element.offer.price} ₽/ночь`;
+  (!data.offer.price) ? item.querySelector('.popup__text--price').calssList.add('hidden') : item.querySelector('.popup__text--price').textContent = `${data.offer.price} ₽/ночь`;
 
-    (!element.offer.type) ? item.querySelector('.popup__type').classList.add('hidden') : item.querySelector('.popup__type').textContent = getTypeHousing(element.offer.type);
+  (!data.offer.type) ? item.querySelector('.popup__type').classList.add('hidden') : item.querySelector('.popup__type').textContent = getTypeHousing(data.offer.type);
 
-    (!element.offer.guests || !element.offer.rooms) ? item.querySelector('.popup__text--capacity').classList.add('hidden') : item.querySelector('.popup__text--capacity').textContent = `${room} ${getRoomsMessage(room)} для ${guest} ${getGuestsMessage(guest)}`;
+  (!data.offer.guests || !data.offer.rooms) ? item.querySelector('.popup__text--capacity').classList.add('hidden') : item.querySelector('.popup__text--capacity').textContent = `${room} ${getRoomsMessage(room)} для ${guest} ${getGuestsMessage(guest)}`;
 
-    (!element.offer.checkout || !element.offer.checkin) ? item.querySelector('.popup__text--time').classList.add('hidden') :   item.querySelector('.popup__text--time').textContent = `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`;
+  (!data.offer.checkout || !data.offer.checkin) ? item.querySelector('.popup__text--time').classList.add('hidden') :   item.querySelector('.popup__text--time').textContent = `Заезд после ${data.offer.checkin}, выезд до ${data.offer.checkout}`;
 
-    (!element.offer.features) ? features.classList.add('hidden') :   getFeaturesList(element.offer.features, features);
+  (!data.offer.features) ? features.classList.add('hidden') :   getFeaturesList(data.offer.features, features);
 
-    (!element.offer.description) ? item.querySelector('.popup__description').classList.add('hidden') : item.querySelector('.popup__description').textContent = element.offer.description;
+  (!data.offer.description) ? item.querySelector('.popup__description').classList.add('hidden') : item.querySelector('.popup__description').textContent = data.offer.description;
 
-    (!element.offer.photos) ? photos.classList.add('hidden') :  getPhotosList(element.offer.photos, photos);
+  (!data.offer.photos) ? photos.classList.add('hidden') :  getPhotosList(data.offer.photos, photos);
 
-    (!element.author.avatar) ? item.querySelector('.popup__avatar').classList.add('hidden') : item.querySelector('.popup__avatar').src = element.author.avatar;
+  (!data.author.avatar) ? item.querySelector('.popup__avatar').classList.add('hidden') : item.querySelector('.popup__avatar').src = data.author.avatar;
 
-    result.push(item);
-  });
-  return result;
-}
+  return item;
+};
