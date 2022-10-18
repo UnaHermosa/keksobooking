@@ -72,10 +72,9 @@ const activateForm = () => {
   addClass(mapFiltersList, false);
   getCoordinates(CENTER_TOKYO);
   address.setAttribute('readonly', '');
+  formType.addEventListener('change', onTypeOfHousingSelectChange());
+  timeIn.addEventListener('change', onTimeSelectChange(timeOut));
+  timeOut.addEventListener('change', onTimeSelectChange(timeIn));
 };
-
-formType.addEventListener('change', onTypeOfHousingSelectChange());
-timeIn.addEventListener('change', onTimeSelectChange(timeOut));
-timeOut.addEventListener('change', onTimeSelectChange(timeIn));
 
 

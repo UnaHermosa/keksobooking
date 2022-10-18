@@ -1026,3 +1026,9 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.error {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: #b00000;
+}
