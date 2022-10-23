@@ -1,7 +1,5 @@
-import { createAdvertismentsArray } from './data.js';
 import { activateForm } from './form.js';
 import { getSimilarArticles } from './popup.js';
-export {mainMarker, map, CENTER_TOKYO, getMap, getCoordinates };
 
 const address = document.querySelector('#address');
 const L = window.L;
@@ -63,17 +61,16 @@ const getCurrentCoordinates = () => mainMarker.on('moveend', (evt) => {
 mainMarker.addTo(map);
 getCurrentCoordinates();
 
-const markers = () => {
-  const points = createAdvertismentsArray();
-  points.forEach(element => {
+const markers = (data) => {
+  data.forEach(element => {
     const pin = L.icon({
       iconUrl: './leaflet/img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
     const marker = L.marker({
-      lat: element.location.x,
-      lng: element.location.y,
+      lat: element.location.lat,
+      lng: element.location.lng,
     },
     {
       icon: pin,
@@ -84,4 +81,4 @@ const markers = () => {
   })
 };
 
-markers();
+export {mainMarker, map, CENTER_TOKYO, getMap, getCoordinates, markers };
