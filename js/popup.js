@@ -1,5 +1,3 @@
-export {getSimilarArticles};
-
 const TYPE_OF_HOUSING = {
   'bungalow': 'бунгало',
   'flat': 'квартира',
@@ -99,3 +97,5 @@ const getSimilarArticles = (data) => {
 
   return item;
 };
+
+export { getSimilarArticles };

@@ -81,4 +81,4 @@ const markers = (data) => {
   })
 };
 
-export {mainMarker, map, CENTER_TOKYO, getMap, getCoordinates, markers };
+export {mainMarker, map, CENTER_TOKYO, getMap, getCoordinates, markers, ZOOM_MAP };

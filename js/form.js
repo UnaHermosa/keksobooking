@@ -1,15 +1,22 @@
-import { CENTER_TOKYO, getCoordinates } from './map.js';
-export { activateForm, disableForm };
+import { CENTER_TOKYO, getCoordinates, mainMarker, map, ZOOM_MAP } from './map.js';
+import { sendData } from './server.js';
+import { showSuccessModal, showErrorModal } from './util.js';
+import { addErrorStyle, addNormalStyle } from './form-validation.js';
 
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersList = mapFilters.children;
 const adForm = document.querySelector('.ad-form');
 const adFormList = adForm.children;
+const formTitle = adForm.querySelector('#title');
 const address = adForm.querySelector('#address');
 const formType = adForm.querySelector('#type');
 const formPrice = adForm.querySelector('#price');
 const timeIn = adForm.querySelector('#timein');
 const timeOut = adForm.querySelector('#timeout');
+const capacity = adForm.querySelector('#capacity');
+const roomNumber = adForm.querySelector('#room_number');
+const submitButton = adForm.querySelector('.ad-form__submit');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 const MIN_PRICE_OF_HOUSING = {
   'bungalow': 0,
@@ -68,13 +75,67 @@ const disableForm = () => {
 const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   addClass(adFormList, false);
-  mapFilters.classList.remove('map__filters--disabled');
-  addClass(mapFiltersList, false);
   getCoordinates(CENTER_TOKYO);
   address.setAttribute('readonly', '');
-  formType.addEventListener('change', onTypeOfHousingSelectChange());
-  timeIn.addEventListener('change', onTimeSelectChange(timeOut));
-  timeOut.addEventListener('change', onTimeSelectChange(timeIn));
 };
 
+formType.addEventListener('change', onTypeOfHousingSelectChange());
+timeIn.addEventListener('change', onTimeSelectChange(timeOut));
+timeOut.addEventListener('change', onTimeSelectChange(timeIn));
 
+const clearForm = () => {
+  formTitle.value = '';
+  formType.value = 'flat';
+  formPrice.value = '';
+  formPrice.placeholder = MIN_PRICE_OF_HOUSING.flat;
+  roomNumber.value = '1';
+  capacity.value = '1';
+  if(!formTitle.checkValidity()) {
+    addNormalStyle(formTitle);
+  }
+  if(!formPrice.checkValidity()) {
+    addNormalStyle(formPrice);
+  }
+}
+
+const publishAdvertisement = () => {
+  submitButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(adForm);
+    
+    if(!formTitle.checkValidity() && !formPrice.checkValidity()) {
+      if(!formTitle.checkValidity()) {
+        addErrorStyle(formTitle);
+      } else {
+        addNormalStyle(formTitle);
+      }
+
+      if(!formPrice.checkValidity()) {
+        addErrorStyle(formPrice);
+      } else {
+        addNormalStyle(formPrice);
+      }
+    } else {
+      sendData(() => {
+        showSuccessModal();
+        clearForm();
+      },
+      () => {
+        showErrorModal()},
+      formData,
+      )
+    }
+  });
+} 
+
+const resetForm = () => {
+  resetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    clearForm();
+    mainMarker.setLatLng(CENTER_TOKYO);
+    map.setView(CENTER_TOKYO, ZOOM_MAP);
+    getCoordinates(CENTER_TOKYO);
+  })
+};
+
+export { activateForm, disableForm, addClass, publishAdvertisement, resetForm };
