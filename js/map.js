@@ -7,7 +7,7 @@ const CENTER_TOKYO = {
   lat: 35.6895,
   lng: 139.692,
 };
-const ZOOM_MAP = 10;
+const ZOOM_MAP = 14;
 const FLOAT_COUNT = 5;
 const LeafletParameters = {
   TILE_LAYER: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',

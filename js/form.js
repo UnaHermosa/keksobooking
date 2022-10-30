@@ -26,6 +26,13 @@ const MIN_PRICE_OF_HOUSING = {
   'palace': 10000,
 };
 
+const RoomsForGuests = {
+  1: ['1'],
+  2: ['1', '2'],
+  3: ['1','2', '3'],
+  100: [0],
+};
+
 const onTimeSelectChange = (element) => {
   return (evt) => {
     element.value = evt.target.value;
@@ -89,12 +96,15 @@ const clearForm = () => {
   formPrice.value = '';
   formPrice.placeholder = MIN_PRICE_OF_HOUSING.flat;
   roomNumber.value = '1';
-  capacity.value = '1';
+  capacity.value = '3';
   if(!formTitle.checkValidity()) {
     addNormalStyle(formTitle);
   }
   if(!formPrice.checkValidity()) {
     addNormalStyle(formPrice);
+  }
+  if(!capacity.checkValidity()) {
+    addNormalStyle(capacity);
   }
 }
 
@@ -103,19 +113,13 @@ const publishAdvertisement = () => {
     evt.preventDefault();
     const formData = new FormData(adForm);
     
-    if(!formTitle.checkValidity() && !formPrice.checkValidity()) {
-      if(!formTitle.checkValidity()) {
-        addErrorStyle(formTitle);
-      } else {
-        addNormalStyle(formTitle);
-      }
+    if(!formTitle.checkValidity() || !formPrice.checkValidity() || !capacity.checkValidity()) {
+      !formTitle.checkValidity() ? addErrorStyle(formTitle) : addNormalStyle(formTitle);
 
-      if(!formPrice.checkValidity()) {
-        addErrorStyle(formPrice);
-      } else {
-        addNormalStyle(formPrice);
-      }
-    } else {
+      !formPrice.checkValidity() ? addErrorStyle(formPrice) : addNormalStyle(formPrice);
+
+      !RoomsForGuests[roomNumber.value].includes(capacity.value) ? addErrorStyle(capacity) : addNormalStyle(capacity);
+    } else {      
       sendData(() => {
         showSuccessModal();
         clearForm();

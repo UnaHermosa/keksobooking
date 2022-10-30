@@ -1,5 +1,5 @@
 const SERVER = {
-  GET: 'https://23.javascript.pages.academy/keksobooking/data1',
+  GET: 'https://23.javascript.pages.academy/keksobooking/data',
   POST: 'https://23.javascript.pages.academy/keksobooking',
 };
 

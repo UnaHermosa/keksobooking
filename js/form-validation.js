@@ -8,6 +8,7 @@ const BORDER_STYLE = {
   color: '#d9d9d3',
   width: '1px',
 };
+
 const MAX_PRICE = 1000000;
 
 const form = document.querySelector('.ad-form');

@@ -1,4 +1,4 @@
-import { showErrorModal, showErrorMessage } from './util.js';
+import { showErrorMessage } from './util.js';
 import { disableForm, addClass, publishAdvertisement, resetForm } from './form.js';
 import { getMap, markers } from './map.js';
 import './form-validation.js';
@@ -9,7 +9,9 @@ const mapFilters = document.querySelector('.map__filters');
 const mapFiltersList = mapFilters.children;
 
 disableForm();
+
 getMap();
+
 getData((ads) => {
   markers(ads.slice(0, MAX_ADJUSTMENTS_COUNT));
   mapFilters.classList.remove('map__filters--disabled');
@@ -17,4 +19,5 @@ getData((ads) => {
 }, (err) => showErrorMessage(err));
 
 publishAdvertisement();
+
 resetForm();
