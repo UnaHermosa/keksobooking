@@ -1,20 +1,21 @@
-import { createAdvertismentsArray } from './data.js';
 import { activateForm } from './form.js';
 import { getSimilarArticles } from './popup.js';
-export {mainMarker, map, CENTER_TOKYO, getMap, getCoordinates };
 
 const address = document.querySelector('#address');
 const L = window.L;
-const CENTER_TOKYO = {
-  lat: 35.6895,
-  lng: 139.692,
+const CenterTokyo = {
+  lat: 35.69034,
+  lng: 139.75175,
 };
-const ZOOM_MAP = 10;
+
+const ZOOM_MAP = 14;
 const FLOAT_COUNT = 5;
 const LeafletParameters = {
   TILE_LAYER: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 };
+
+const MAX_ADJUSTMENTS_COUNT = 10;
 
 const map = L.map('map-canvas');
 const getMap = () => {
@@ -22,8 +23,8 @@ const getMap = () => {
     activateForm();
   }).setView(
     {
-      lat: CENTER_TOKYO.lat,
-      lng: CENTER_TOKYO.lng, 
+      lat: CenterTokyo.lat,
+      lng: CenterTokyo.lng, 
     }, ZOOM_MAP);
   L.tileLayer(
     LeafletParameters.TILE_LAYER,
@@ -42,8 +43,8 @@ const MAIN_PIN = L.icon(
 
 const mainMarker = L.marker(
   {
-    lat: CENTER_TOKYO.lat,
-    lng: CENTER_TOKYO.lng, 
+    lat: CenterTokyo.lat,
+    lng: CenterTokyo.lng, 
   },
   {
     draggable: true,
@@ -63,25 +64,29 @@ const getCurrentCoordinates = () => mainMarker.on('moveend', (evt) => {
 mainMarker.addTo(map);
 getCurrentCoordinates();
 
-const markers = () => {
-  const points = createAdvertismentsArray();
-  points.forEach(element => {
+const markerGroup = L.layerGroup().addTo(map);
+
+const clearMarkers = () => markerGroup.clearLayers();
+
+const markers = (data) => {
+  data.slice(0, MAX_ADJUSTMENTS_COUNT).forEach(element => {
     const pin = L.icon({
       iconUrl: './leaflet/img/pin.svg',
       iconSize: [40, 40],
       iconAnchor: [20, 40],
     });
     const marker = L.marker({
-      lat: element.location.x,
-      lng: element.location.y,
+      lat: element.location.lat,
+      lng: element.location.lng,
     },
     {
       icon: pin,
     });
-    marker.addTo(map).bindPopup(getSimilarArticles(element), {
+    map.innerHTML = '';
+    marker.addTo(markerGroup).bindPopup(getSimilarArticles(element), {
       keepInView: true,
     });
   })
 };
 
-markers();
+export {mainMarker, map, CenterTokyo, getMap, getCoordinates, markers, clearMarkers, ZOOM_MAP };

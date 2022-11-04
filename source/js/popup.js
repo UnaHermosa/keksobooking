@@ -1,6 +1,4 @@
-export {getSimilarArticles};
-
-const TYPE_OF_HOUSING = {
+const typeOfHousing = {
   'bungalow': 'бунгало',
   'flat': 'квартира',
   'house': 'дом',
@@ -34,19 +32,19 @@ const getTypeHousing = (type) => {
   let typeHousing = '';
   switch (type) {
     case 'flat':
-      typeHousing = TYPE_OF_HOUSING.flat;
+      typeHousing = typeOfHousing.flat;
       break;
     case 'bungalow':
-      typeHousing = TYPE_OF_HOUSING.bungalow;
+      typeHousing = typeOfHousing.bungalow;
       break;
     case 'hotel':
-      typeHousing = TYPE_OF_HOUSING.hotel;
+      typeHousing = typeOfHousing.hotel;
       break;
     case 'house':
-      typeHousing = TYPE_OF_HOUSING.house;
+      typeHousing = typeOfHousing.house;
       break;
     case 'palace':
-      typeHousing = TYPE_OF_HOUSING.palace;
+      typeHousing = typeOfHousing.palace;
       break;
   }
   return typeHousing;
@@ -99,3 +97,5 @@ const getSimilarArticles = (data) => {
 
   return item;
 };
+
+export { getSimilarArticles };
