@@ -1,4 +1,4 @@
-import { CENTER_TOKYO, getCoordinates, mainMarker, map, ZOOM_MAP } from './map.js';
+import { CenterTokyo, getCoordinates, mainMarker, map, ZOOM_MAP } from './map.js';
 import { sendData } from './server.js';
 import { showSuccessModal, showErrorModal } from './util.js';
 import { addErrorStyle, addNormalStyle } from './form-validation.js';
@@ -18,7 +18,7 @@ const roomNumber = adForm.querySelector('#room_number');
 const submitButton = adForm.querySelector('.ad-form__submit');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
-const MIN_PRICE_OF_HOUSING = {
+const minPriceOfHousing = {
   'bungalow': 0,
   'flat': 1000,
   'hotel': 3000,
@@ -26,7 +26,7 @@ const MIN_PRICE_OF_HOUSING = {
   'palace': 10000,
 };
 
-const RoomsForGuests = {
+const roomsForGuests = {
   1: ['1'],
   2: ['1', '2'],
   3: ['1','2', '3'],
@@ -43,24 +43,24 @@ const onTypeOfHousingSelectChange = () => {
   return (evt) => {
     switch (evt.target.value) {
       case 'bungalow':
-        formPrice.placeholder = MIN_PRICE_OF_HOUSING.bungalow;
-        formPrice.min = MIN_PRICE_OF_HOUSING.bungalow;
+        formPrice.placeholder = minPriceOfHousing.bungalow;
+        formPrice.min = minPriceOfHousing.bungalow;
         break;
       case 'flat':
-        formPrice.placeholder = MIN_PRICE_OF_HOUSING.flat;
-        formPrice.min = MIN_PRICE_OF_HOUSING.flat;
+        formPrice.placeholder = minPriceOfHousing.flat;
+        formPrice.min = minPriceOfHousing.flat;
         break;
       case 'hotel':
-        formPrice.placeholder = MIN_PRICE_OF_HOUSING.hotel;
-        formPrice.min = MIN_PRICE_OF_HOUSING.hotel;
+        formPrice.placeholder = minPriceOfHousing.hotel;
+        formPrice.min = minPriceOfHousing.hotel;
         break;
       case 'house':
-        formPrice.placeholder = MIN_PRICE_OF_HOUSING.house;
-        formPrice.min = MIN_PRICE_OF_HOUSING.house;
+        formPrice.placeholder = minPriceOfHousing.house;
+        formPrice.min = minPriceOfHousing.house;
         break;
       case 'palace':
-        formPrice.placeholder = MIN_PRICE_OF_HOUSING.palace;
-        formPrice.min = MIN_PRICE_OF_HOUSING.palace;
+        formPrice.placeholder = minPriceOfHousing.palace;
+        formPrice.min = minPriceOfHousing.palace;
         break;
     }
   };
@@ -82,7 +82,7 @@ const disableForm = () => {
 const activateForm = () => {
   adForm.classList.remove('ad-form--disabled');
   addClass(adFormList, false);
-  getCoordinates(CENTER_TOKYO);
+  getCoordinates(CenterTokyo);
   address.setAttribute('readonly', '');
 };
 
@@ -94,7 +94,7 @@ const clearForm = () => {
   formTitle.value = '';
   formType.value = 'flat';
   formPrice.value = '';
-  formPrice.placeholder = MIN_PRICE_OF_HOUSING.flat;
+  formPrice.placeholder = minPriceOfHousing.flat;
   roomNumber.value = '1';
   capacity.value = '3';
   if(!formTitle.checkValidity()) {
@@ -118,7 +118,7 @@ const publishAdvertisement = () => {
 
       !formPrice.checkValidity() ? addErrorStyle(formPrice) : addNormalStyle(formPrice);
 
-      !RoomsForGuests[roomNumber.value].includes(capacity.value) ? addErrorStyle(capacity) : addNormalStyle(capacity);
+      !roomsForGuests[roomNumber.value].includes(capacity.value) ? addErrorStyle(capacity) : addNormalStyle(capacity);
     } else {      
       sendData(() => {
         showSuccessModal();
@@ -136,9 +136,9 @@ const resetForm = () => {
   resetButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     clearForm();
-    mainMarker.setLatLng(CENTER_TOKYO);
-    map.setView(CENTER_TOKYO, ZOOM_MAP);
-    getCoordinates(CENTER_TOKYO);
+    mainMarker.setLatLng(CenterTokyo);
+    map.setView(CenterTokyo, ZOOM_MAP);
+    getCoordinates(CenterTokyo);
   })
 };
 

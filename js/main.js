@@ -3,8 +3,9 @@ import { disableForm, addClass, publishAdvertisement, resetForm } from './form.j
 import { getMap, markers } from './map.js';
 import './form-validation.js';
 import { getData } from './server.js';
+import { checkAllFilters, changeFilters } from './filters.js';
 
-const MAX_ADJUSTMENTS_COUNT = 10;
+
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersList = mapFilters.children;
 
@@ -13,9 +14,10 @@ disableForm();
 getMap();
 
 getData((ads) => {
-  markers(ads.slice(0, MAX_ADJUSTMENTS_COUNT));
+  markers(ads);
   mapFilters.classList.remove('map__filters--disabled');
   addClass(mapFiltersList, false);
+  changeFilters(() => checkAllFilters(ads));
 }, (err) => showErrorMessage(err));
 
 publishAdvertisement();

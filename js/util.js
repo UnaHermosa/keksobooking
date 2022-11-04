@@ -1,5 +1,19 @@
 const MODAL_SHOW_TIME = 4000;
 
+const messageStyle = {
+  zIndex: '1000',
+  position: 'absolute',
+  left: '0',
+  rigth: '0',
+  top: '0',
+  padding: '30px 20px',
+  fontSize: '40px',
+  fontWeight: '700',
+  backgroundColor: 'red',
+  color: 'white',
+  textAlign: 'center',
+};
+
 const onModalEscPress = (evt) => {
   if(evt.key === 'Escape' || evt.key === 'Esc') {
     closeErrorModal();
@@ -27,17 +41,17 @@ const errorButton = errorModal.querySelector('.error__button');
 
 const showErrorMessage = (message) => {
   const messageContainer = document.createElement('div');
-  messageContainer.style.zIndex = '1000';
-  messageContainer.style.position = 'absolute';
-  messageContainer.style.left = '0';
-  messageContainer.style.top = '0';
-  messageContainer.style.right = '0';
-  messageContainer.style.padding = '30px 20px';
-  messageContainer.style.fontSize = '40px';
-  messageContainer.style.fontWeight = '700';
-  messageContainer.style.color = 'white';
-  messageContainer.style.backgroundColor = 'red';
-  messageContainer.style.textAlign = 'center';
+  messageContainer.style.zIndex = messageStyle.zIndex;
+  messageContainer.style.position = messageStyle.position;
+  messageContainer.style.left = messageStyle.left;
+  messageContainer.style.top = messageStyle.top;
+  messageContainer.style.right = messageStyle.rigth;
+  messageContainer.style.padding = messageStyle.padding;
+  messageContainer.style.fontSize = messageStyle.fontSize;
+  messageContainer.style.fontWeight = messageStyle.fontWeight;
+  messageContainer.style.color = messageStyle.color;
+  messageContainer.style.backgroundColor = messageStyle.backgroundColor;
+  messageContainer.style.textAlign = messageStyle.textAlign;
 
   messageContainer.textContent = message;
   document.body.append(messageContainer);

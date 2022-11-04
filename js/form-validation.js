@@ -2,7 +2,8 @@ const TITLE_LENGTH = {
   MIN: 30,
   MAX: 100,
 };
-const BORDER_STYLE = {
+
+const borderStyle = {
   errorColor: 'red',
   errorWidth: '3px',
   color: '#d9d9d3',
@@ -18,13 +19,13 @@ const capacity = form.querySelector('#capacity');
 const roomNumber = form.querySelector('#room_number');
 
 const addErrorStyle = (element) => {
-  element.style.borderColor = BORDER_STYLE.errorColor;
-  element.style.borderWidth = BORDER_STYLE.errorWidth;
+  element.style.borderColor = borderStyle.errorColor;
+  element.style.borderWidth = borderStyle.errorWidth;
 };
 
 const addNormalStyle = (element) => {
-  element.style.borderColor = BORDER_STYLE.color;
-  element.style.borderWidth = BORDER_STYLE.width;  
+  element.style.borderColor = borderStyle.color;
+  element.style.borderWidth = borderStyle.width;  
 }
 
 const onTitleInput = () => {

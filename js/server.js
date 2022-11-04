@@ -1,10 +1,10 @@
-const SERVER = {
+const Server = {
   GET: 'https://23.javascript.pages.academy/keksobooking/data',
   POST: 'https://23.javascript.pages.academy/keksobooking',
 };
 
 const getData = (onSuccess, onFail) => {
-  fetch(SERVER.GET)
+  fetch(Server.GET)
     .then((response) => {
       if(response.ok) {
         return response.json();
@@ -21,7 +21,7 @@ const getData = (onSuccess, onFail) => {
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(SERVER.POST,
+  fetch(Server.POST,
     {
       method: 'POST',
       body,
