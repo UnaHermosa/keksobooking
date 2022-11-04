@@ -4,8 +4,8 @@ import { getSimilarArticles } from './popup.js';
 const address = document.querySelector('#address');
 const L = window.L;
 const CenterTokyo = {
-  lat: 35.6895,
-  lng: 139.692,
+  lat: 35.69034,
+  lng: 139.75175,
 };
 
 const ZOOM_MAP = 14;

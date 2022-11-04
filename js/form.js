@@ -2,6 +2,7 @@ import { CenterTokyo, getCoordinates, mainMarker, map, ZOOM_MAP } from './map.js
 import { sendData } from './server.js';
 import { showSuccessModal, showErrorModal } from './util.js';
 import { addErrorStyle, addNormalStyle } from './form-validation.js';
+import { renderPhoto } from './picture.js';
 
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersList = mapFilters.children;
@@ -17,6 +18,11 @@ const capacity = adForm.querySelector('#capacity');
 const roomNumber = adForm.querySelector('#room_number');
 const submitButton = adForm.querySelector('.ad-form__submit');
 const resetButton = adForm.querySelector('.ad-form__reset');
+const avatarPreview = adForm.querySelector('.ad-form-header__preview');
+const avatar = avatarPreview.querySelector('img').cloneNode(true);
+const avatarChooser = adForm.querySelector('.ad-form__field input[type=file');
+const photoPreview = adForm.querySelector('.ad-form__photo');
+const photoChooser = adForm.querySelector('.ad-form__upload input[type=file');
 
 const minPriceOfHousing = {
   'bungalow': 0,
@@ -31,6 +37,11 @@ const roomsForGuests = {
   2: ['1', '2'],
   3: ['1','2', '3'],
   100: [0],
+};
+
+const Img = {
+  WIDTH: 70,
+  HEIGHT: 70,
 };
 
 const onTimeSelectChange = (element) => {
@@ -141,5 +152,31 @@ const resetForm = () => {
     getCoordinates(CenterTokyo);
   })
 };
+
+const getAvatar = (result) => {
+  const fragment = document.createDocumentFragment();
+  avatar.src = result;
+  fragment.appendChild(avatar);
+  avatarPreview.innerHTML = '';
+  avatarPreview.appendChild(fragment);
+};
+
+const getPhoto = (result) => {
+  photoPreview.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+  const element = document.createElement('img');
+  element.src = result;
+  element.alt = 'Фотография жилья';
+  element.width = Img.WIDTH;
+  element.height = Img.HEIGHT;
+  fragment.appendChild(element);
+  photoPreview.appendChild(fragment);
+};
+
+const getAvatarPreview = () => renderPhoto(avatarChooser, getAvatar);
+const getPhotoPreview = () => renderPhoto(photoChooser, getPhoto);
+
+getAvatarPreview();
+getPhotoPreview();
 
 export { activateForm, disableForm, addClass, publishAdvertisement, resetForm };

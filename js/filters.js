@@ -59,8 +59,8 @@ const checkAllFilters = (ads) => {
 
 const changeFilters = (cb) => {
   mapFilters.addEventListener('change', () => {
-    clearMarkers();
     cb();
+    clearMarkers();
   })
 };
 

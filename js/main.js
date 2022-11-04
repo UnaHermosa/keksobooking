@@ -4,6 +4,7 @@ import { getMap, markers } from './map.js';
 import './form-validation.js';
 import { getData } from './server.js';
 import { checkAllFilters, changeFilters } from './filters.js';
+import './picture.js'
 
 const RENDER_DELAY = 500;
 const mapFilters = document.querySelector('.map__filters');
