@@ -1,11 +1,11 @@
-import { showErrorMessage } from './util.js';
+import { showErrorMessage, debounce } from './util.js';
 import { disableForm, addClass, publishAdvertisement, resetForm } from './form.js';
 import { getMap, markers } from './map.js';
 import './form-validation.js';
 import { getData } from './server.js';
 import { checkAllFilters, changeFilters } from './filters.js';
 
-
+const RENDER_DELAY = 500;
 const mapFilters = document.querySelector('.map__filters');
 const mapFiltersList = mapFilters.children;
 
@@ -17,7 +17,7 @@ getData((ads) => {
   markers(ads);
   mapFilters.classList.remove('map__filters--disabled');
   addClass(mapFiltersList, false);
-  changeFilters(() => checkAllFilters(ads));
+  changeFilters(debounce(() => checkAllFilters(ads), RENDER_DELAY));
 }, (err) => showErrorMessage(err));
 
 publishAdvertisement();

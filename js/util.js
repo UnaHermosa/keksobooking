@@ -75,4 +75,12 @@ const showSuccessModal = () => {
   document.addEventListener('click', closeSuccessModal);
 };
 
-export { showErrorModal, showSuccessModal, showErrorMessage };
+const debounce = (cb, delay) => {
+  let lastTimeout = null;
+  return (...rest) => {
+    clearTimeout(lastTimeout);
+    lastTimeout = setTimeout(() => cb.apply(this, rest), delay);
+  };
+};
+
+export { showErrorModal, showSuccessModal, showErrorMessage, debounce };
